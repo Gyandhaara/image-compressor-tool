@@ -6,31 +6,24 @@
   <title>Image Compressor</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <meta name="description" content="Free online tool to compress JPEG, PNG, and WEBP images while maintaining quality">
 </head>
 <body class="bg-gray-100 text-gray-800">
   <div class="max-w-4xl mx-auto p-4 md:p-6">
     <div class="bg-white rounded-xl shadow-md overflow-hidden">
-      <!-- Tab Navigation -->
-      <div class="flex border-b">
-        <button class="tab-btn active px-4 py-3 font-medium text-blue-600 border-b-2 border-blue-600" data-tab="compressor">
-          <i class="fas fa-compress-alt mr-2"></i>Compressor
-        </button>
-        <button class="tab-btn px-4 py-3 font-medium text-gray-500 hover:text-blue-600" data-tab="legal">
-          <i class="fas fa-balance-scale mr-2"></i>Legal Info
-        </button>
-        <button class="tab-btn px-4 py-3 font-medium text-gray-500 hover:text-blue-600" data-tab="credits">
-          <i class="fas fa-heart mr-2"></i>Credits
-        </button>
-      </div>
+      <div class="p-6">
+        <h1 class="text-2xl md:text-3xl font-semibold text-center mb-6 text-blue-600">
+          <i class="fas fa-compress-alt mr-2"></i>Image Compressor
+        </h1>
 
-      <!-- Compressor Tab (Main Content) -->
-      <div id="compressor-tab" class="tab-content">
-        <div class="p-6">
-          <h1 class="text-2xl md:text-3xl font-semibold text-center mb-6 text-blue-600">
-            <i class="fas fa-compress-alt mr-2"></i>Image Compressor
-          </h1>
+        <!-- Tabs Navigation -->
+        <div class="flex border-b mb-6">
+          <button id="compressorTab" class="px-4 py-2 font-medium text-blue-600 border-b-2 border-blue-600">Compressor</button>
+          <button id="legalTab" class="px-4 py-2 font-medium text-gray-500 hover:text-blue-600">Legal Information</button>
+          <button id="creditsTab" class="px-4 py-2 font-medium text-gray-500 hover:text-blue-600">Credits</button>
+        </div>
 
+        <!-- Compressor Tab Content -->
+        <div id="compressorContent">
           <!-- Drag & Drop Zone -->
           <div id="dropZone" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-all duration-300 hover:border-blue-400 hover:bg-blue-50">
             <div class="flex flex-col items-center justify-center space-y-3">
@@ -63,163 +56,182 @@
           </div>
         </div>
 
-        <!-- Results Section -->
-        <div id="resultsSection" class="hidden bg-gray-50 border-t p-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Original Image -->
-            <div class="bg-white p-4 rounded-lg shadow-sm border">
-              <p class="font-semibold mb-3 text-gray-700 flex items-center gap-2">
-                <i class="fas fa-image text-blue-400"></i> Original Image
-              </p>
-              <div class="relative aspect-square bg-gray-100 rounded-md overflow-hidden">
-                <img id="originalImg" class="absolute inset-0 w-full h-full object-contain" alt="Original uploaded image">
-              </div>
-              <div class="mt-3 flex justify-between items-center text-sm">
-                <span id="originalDimensions" class="text-gray-500"></span>
-                <span id="originalSize" class="font-medium"></span>
-              </div>
+        <!-- Legal Information Tab Content -->
+        <div id="legalContent" class="hidden">
+          <div class="space-y-6">
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <h3 class="font-semibold text-blue-700 mb-2"><i class="fas fa-copyright mr-2"></i>Copyright Notice</h3>
+              <p class="text-sm text-gray-700">All images processed by this tool remain the exclusive property of their respective copyright holders. This service does not claim ownership, license, or rights to any uploaded content. Users must ensure they possess all necessary permissions, releases, and rights before uploading any images. Unauthorized use of copyrighted material is strictly prohibited and may result in legal action by the rightful owners.</p>
             </div>
 
-            <!-- Compressed Image -->
-            <div class="bg-white p-4 rounded-lg shadow-sm border">
-              <p class="font-semibold mb-3 text-gray-700 flex items-center gap-2">
-                <i class="fas fa-file-export text-green-400"></i> Compressed Image
-              </p>
-              <div class="relative aspect-square bg-gray-100 rounded-md overflow-hidden">
-                <img id="compressedImg" class="absolute inset-0 w-full h-full object-contain" alt="Compressed image result">
-              </div>
-              <div class="mt-3 flex justify-between items-center text-sm">
-                <span id="compressedDimensions" class="text-gray-500"></span>
-                <span id="compressedSize" class="font-medium"></span>
-              </div>
-              <div class="mt-4 flex flex-col sm:flex-row gap-3">
-                <button id="downloadBtn" class="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-2">
-                  <i class="fas fa-download"></i> Download
-                </button>
-                <button id="copyBtn" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
-                  Copy Link
-                </button>
-              </div>
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <h3 class="font-semibold text-blue-700 mb-2"><i class="fas fa-balance-scale mr-2"></i>Terms of Use</h3>
+              <p class="text-sm text-gray-700">By accessing this tool, you agree to comply with all applicable laws regarding copyright and intellectual property. You expressly warrant that any content you upload: (1) you own or have legal authorization to use, (2) does not infringe any third-party rights, and (3) complies with all relevant regulations. Prohibited uses include but are not limited to: processing illegal content, infringing materials, or content violating privacy rights. We reserve the right to terminate access for any violation of these terms.</p>
             </div>
-          </div>
 
-          <!-- Stats -->
-          <div id="stats" class="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100 hidden">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-              <div>
-                <p class="text-xs text-blue-600">Original Size</p>
-                <p id="statsOriginal" class="font-bold">0 KB</p>
-              </div>
-              <div>
-                <p class="text-xs text-blue-600">Compressed Size</p>
-                <p id="statsCompressed" class="font-bold">0 KB</p>
-              </div>
-              <div>
-                <p class="text-xs text-blue-600">Reduction</p>
-                <p id="statsReduction" class="font-bold text-green-600">0%</p>
-              </div>
-              <div>
-                <p class="text-xs text-blue-600">Quality</p>
-                <p id="statsQuality" class="font-bold">75%</p>
-              </div>
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <h3 class="font-semibold text-blue-700 mb-2"><i class="fas fa-lock mr-2"></i>Privacy & Data Protection</h3>
+              <p class="text-sm text-gray-700">This tool operates entirely client-side in your browser. No images are transmitted to, stored on, or processed by our servers. We implement a strict zero-data-retention policy - all processing occurs locally in your browser session and is automatically discarded when you close the tab. We do not collect, analyze, or monetize your data in any way. For transparency: no cookies, trackers, or analytics are employed in this application.</p>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <h3 class="font-semibold text-blue-700 mb-2"><i class="fas fa-gavel mr-2"></i>DMCA Compliance & Copyright Infringement</h3>
+              <p class="text-sm text-gray-700">We respect intellectual property rights and comply with the Digital Millennium Copyright Act (DMCA). If you believe your copyrighted work has been improperly processed through this tool, please submit a written notice containing: (1) Your contact information, (2) Detailed description of the copyrighted work, (3) Identification of the allegedly infringing material, (4) Statement of good faith belief, and (5) Verification of accuracy under penalty of perjury. Submit notices to our designated agent at legal@gyandhaara.in. We will respond to valid DMCA notices within 72 hours.</p>
+            </div>
+
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+              <h3 class="font-semibold text-blue-700 mb-2"><i class="fas fa-shield-alt mr-2"></i>Limitation of Liability</h3>
+              <p class="text-sm text-gray-700">THIS TOOL IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND. WE EXPLICITLY DISCLAIM ALL LIABILITY FOR: (1) ANY UNAUTHORIZED USE OF COPYRIGHTED MATERIALS BY USERS, (2) TECHNICAL ISSUES RESULTING IN DATA LOSS, (3) ANY THIRD-PARTY CLAIMS ARISING FROM USER CONTENT. By using this service, you agree to indemnify and hold harmless the developers from any claims, damages, or expenses resulting from your violation of these terms. Maximum liability is limited to direct damages not exceeding ₹1000.</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Legal Info Tab -->
-      <div id="legal-tab" class="tab-content hidden p-6">
-        <h2 class="text-xl font-semibold mb-4 text-blue-600">
-          <i class="fas fa-gavel mr-2"></i>Legal Information
-        </h2>
-        
-        <div class="space-y-6">
-          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-            <div class="flex">
-              <div class="flex-shrink-0">
-                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
-              </div>
-              <div class="ml-3">
-                <h3 class="text-sm font-medium text-yellow-800">Copyright Notice</h3>
-                <div class="mt-2 text-sm text-yellow-700">
-                  <p>This tool is provided for lawful purposes only. You must own the copyright or have permission to modify any images you upload.</p>
+        <!-- Credits Tab Content -->
+        <div id="creditsContent" class="hidden">
+          <div class="space-y-6">
+            <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+              <h3 class="font-semibold text-green-700 mb-2"><i class="fas fa-code mr-2"></i>Technologies Used</h3>
+              <div class="flex flex-wrap gap-4 mt-3">
+                <div class="flex items-center">
+                  <i class="fab fa-html5 text-orange-500 text-2xl mr-2"></i>
+                  <span class="text-sm">HTML5 Canvas API</span>
+                </div>
+                <div class="flex items-center">
+                  <i class="fab fa-js-square text-yellow-500 text-2xl mr-2"></i>
+                  <span class="text-sm">JavaScript ES6</span>
+                </div>
+                <div class="flex items-center">
+                  <i class="fab fa-css3-alt text-blue-500 text-2xl mr-2"></i>
+                  <span class="text-sm">Tailwind CSS</span>
+                </div>
+                <div class="fas fa-mobile-alt text-purple-500 text-2xl mr-2"></i>
+                  <span class="text-sm">Responsive Design</span>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div class="prose prose-sm max-w-none">
-            <h3 class="font-medium">Terms of Use</h3>
-            <ul class="list-disc pl-5 space-y-1">
-              <li>By using this tool, you agree that you have the legal right to process the images you upload</li>
-              <li>This service does not store your images permanently - they are processed in your browser and discarded after compression</li>
-              <li>We are not responsible for any copyright infringement resulting from misuse of this tool</li>
-              <li>Compressed images may be subject to quality loss - always verify the results before use</li>
-            </ul>
-            
-            <h3 class="font-medium mt-4">Privacy Policy</h3>
-            <p>This tool processes your images entirely in your web browser. No image data is sent to our servers unless you explicitly choose to save results to the cloud (premium feature).</p>
-            
-            <h3 class="font-medium mt-4">DMCA Compliance</h3>
-            <p>If you believe content processed through this tool infringes your copyright, please contact us with:</p>
-            <ol class="list-decimal pl-5 space-y-1">
-              <li>A physical or electronic signature of the copyright owner</li>
-              <li>Identification of the infringed work</li>
-              <li>Contact information</li>
-              <li>A statement of good faith belief that use is unauthorized</li>
-              <li>A statement that the information is accurate under penalty of perjury</li>
-            </ol>
+
+            <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+              <h3 class="font-semibold text-green-700 mb-2"><i class="fas fa-heart mr-2"></i>Open Source Acknowledgements</h3>
+              <ul class="text-sm text-gray-700 space-y-2">
+                <li><strong>Tailwind CSS</strong> - MIT Licensed utility framework</li>
+                <li><strong>Font Awesome</strong> - CC BY 4.0 Licensed icons</li>
+                <li><strong>HTML5 Canvas</strong> - W3C Standard for client-side processing</li>
+                <li><strong>GitHub</strong> - For project hosting and version control</li>
+              </ul>
+            </div>
+
+            <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+              <h3 class="font-semibold text-green-700 mb-2"><i class="fas fa-users mr-2"></i>Development Team</h3>
+              <p class="text-sm text-gray-700">This privacy-focused tool was developed by the GyanDhaara.in technical team with special attention to:</p>
+              <ul class="text-sm text-gray-700 mt-2 space-y-1 list-disc list-inside">
+                <li>Client-side only processing architecture</li>
+                <li>Zero-data-retention policy implementation</li>
+                <li>Copyright protection mechanisms</li>
+                <li>Cross-platform compatibility</li>
+              </ul>
+            </div>
+
+            <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+              <h3 class="font-semibold text-green-700 mb-2"><i class="fas fa-hands-helping mr-2"></i>Special Thanks</h3>
+              <p class="text-sm text-gray-700">We extend our gratitude to:</p>
+              <ul class="text-sm text-gray-700 mt-2 space-y-1 list-disc list-inside">
+                <li>The open source community for their invaluable contributions</li>
+                <li>Our beta testers for quality assurance feedback</li>
+                <li>Web standards organizations for enabling client-side solutions</li>
+                <li>Our users for supporting privacy-conscious tools</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Credits Tab -->
-      <div id="credits-tab" class="tab-content hidden p-6">
-        <h2 class="text-xl font-semibold mb-4 text-blue-600">
-          <i class="fas fa-heart mr-2"></i>Credits & Acknowledgements
-        </h2>
-        
-        <div class="space-y-6">
-          <div class="bg-blue-50 rounded-lg p-4">
-            <h3 class="font-medium text-blue-800">Technologies Used</h3>
-            <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-4">
-              <div class="flex items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="h-6 w-6 mr-2" alt="HTML5">
-                <span>HTML5</span>
-              </div>
-              <div class="flex items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="h-6 w-6 mr-2" alt="JavaScript">
-                <span>JavaScript</span>
-              </div>
-              <div class="flex items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" class="h-6 w-6 mr-2" alt="Tailwind CSS">
-                <span>Tailwind CSS</span>
-              </div>
+      <!-- Results Section - Maintained side-by-side on desktop -->
+      <div id="resultsSection" class="hidden bg-gray-50 border-t p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Original Image -->
+          <div class="bg-white p-4 rounded-lg shadow-sm border">
+            <p class="font-semibold mb-3 text-gray-700 flex items-center gap-2">
+              <i class="fas fa-image text-blue-400"></i> Original Image
+            </p>
+            <div class="relative aspect-square bg-gray-100 rounded-md overflow-hidden">
+              <img id="originalImg" class="absolute inset-0 w-full h-full object-contain">
+            </div>
+            <div class="mt-3 flex justify-between items-center text-sm">
+              <span id="originalDimensions" class="text-gray-500"></span>
+              <span id="originalSize" class="font-medium"></span>
             </div>
           </div>
-          
-          <div class="prose prose-sm max-w-none">
-            <h3 class="font-medium">Open Source Credits</h3>
-            <p>This tool uses several open source libraries and resources:</p>
-            <ul class="list-disc pl-5 space-y-1">
-              <li><a href="https://tailwindcss.com/" class="text-blue-600 hover:underline">Tailwind CSS</a> for styling</li>
-              <li><a href="https://fontawesome.com/" class="text-blue-600 hover:underline">Font Awesome</a> for icons</li>
-              <li>Browser-native Canvas API for image processing</li>
-            </ul>
-            
-            <h3 class="font-medium mt-4">Development Team</h3>
-            <p>This tool was developed by <a href="https://GyanDhaara.in" class="text-blue-600 hover:underline">GyanDhaara.in</a> with a focus on privacy and ease of use.</p>
-            
-            <h3 class="font-medium mt-4">Special Thanks</h3>
-            <p>To all our users for their feedback and support in making this tool better.</p>
+
+          <!-- Compressed Image -->
+          <div class="bg-white p-4 rounded-lg shadow-sm border">
+            <p class="font-semibold mb-3 text-gray-700 flex items-center gap-2">
+              <i class="fas fa-file-export text-green-400"></i> Compressed Image
+            </p>
+            <div class="relative aspect-square bg-gray-100 rounded-md overflow-hidden">
+              <img id="compressedImg" class="absolute inset-0 w-full h-full object-contain">
+            </div>
+            <div class="mt-3 flex justify-between items-center text-sm">
+              <span id="compressedDimensions" class="text-gray-500"></span>
+              <span id="compressedSize" class="font-medium"></span>
+            </div>
+            <div class="mt-4 flex flex-col sm:flex-row gap-3">
+              <button id="downloadBtn" class="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center justify-center gap-2">
+                <i class="fas fa-download"></i> Download
+              </button>
+              <button id="copyBtn" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div id="stats" class="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-100 hidden">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <p class="text-xs text-blue-600">Original Size</p>
+              <p id="statsOriginal" class="font-bold">0 KB</p>
+            </div>
+            <div>
+              <p class="text-xs text-blue-600">Compressed Size</p>
+              <p id="statsCompressed" class="font-bold">0 KB</p>
+            </div>
+            <div>
+              <p class="text-xs text-blue-600">Reduction</p>
+              <p id="statsReduction" class="font-bold text-green-600">0%</p>
+            </div>
+            <div>
+              <p class="text-xs text-blue-600">Quality</p>
+              <p id="statsQuality" class="font-bold">75%</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Copyright line -->
-    <div class="text-center text-xs text-gray-500 mt-4">
-      © 2025 Professional Image Compressor | GyanDhaara.in | All rights reserved
+    <!-- Updated Footer with Links -->
+    <div class="text-center text-xs text-gray-500 mt-4 space-y-1">
+      <div>© 2025 Professional Image Compressor | GyanDhaara.in | All rights reserved</div>
+      <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-2">
+        <a href="https://gyandhaara.in/en/terms-and-conditions/" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="hover:text-blue-600 transition-colors">
+          Terms and Conditions
+        </a>
+        <a href="https://gyandhaara.in/en/privacy-policy-2/" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="hover:text-blue-600 transition-colors">
+          Privacy Policy
+        </a>
+        <a href="https://gyandhaara.in/en/disclaimer/" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="hover:text-blue-600 transition-colors">
+          Disclaimer
+        </a>
+      </div>
     </div>
   </div>
 
@@ -234,33 +246,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Tab functionality
-      const tabButtons = document.querySelectorAll('.tab-btn');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          // Remove active class from all buttons
-          tabButtons.forEach(btn => {
-            btn.classList.remove('active', 'text-blue-600', 'border-blue-600');
-            btn.classList.add('text-gray-500');
-          });
-          
-          // Add active class to clicked button
-          button.classList.add('active', 'text-blue-600', 'border-blue-600');
-          button.classList.remove('text-gray-500');
-          
-          // Hide all tab contents
-          tabContents.forEach(content => {
-            content.classList.add('hidden');
-          });
-          
-          // Show selected tab content
-          const tabId = button.getAttribute('data-tab') + '-tab';
-          document.getElementById(tabId).classList.remove('hidden');
-        });
-      });
-
       // DOM Elements
       const elements = {
         fileInput: document.getElementById('fileInput'),
@@ -285,7 +270,14 @@
         statsReduction: document.getElementById('statsReduction'),
         statsQuality: document.getElementById('statsQuality'),
         loadingModal: document.getElementById('loadingModal'),
-        loadingProgress: document.getElementById('loadingProgress')
+        loadingProgress: document.getElementById('loadingProgress'),
+        // Tab elements
+        compressorTab: document.getElementById('compressorTab'),
+        legalTab: document.getElementById('legalTab'),
+        creditsTab: document.getElementById('creditsTab'),
+        compressorContent: document.getElementById('compressorContent'),
+        legalContent: document.getElementById('legalContent'),
+        creditsContent: document.getElementById('creditsContent')
       };
 
       // State
@@ -324,6 +316,37 @@
         elements.resetBtn.addEventListener('click', resetTool);
         elements.downloadBtn.addEventListener('click', downloadImage);
         elements.copyBtn.addEventListener('click', copyImageLink);
+        
+        // Tab switching
+        elements.compressorTab.addEventListener('click', () => switchTab('compressor'));
+        elements.legalTab.addEventListener('click', () => switchTab('legal'));
+        elements.creditsTab.addEventListener('click', () => switchTab('credits'));
+      }
+
+      function switchTab(tabName) {
+        // Reset all tabs
+        elements.compressorTab.classList.remove('text-blue-600', 'border-blue-600');
+        elements.legalTab.classList.remove('text-blue-600', 'border-blue-600');
+        elements.creditsTab.classList.remove('text-blue-600', 'border-blue-600');
+        elements.compressorContent.classList.add('hidden');
+        elements.legalContent.classList.add('hidden');
+        elements.creditsContent.classList.add('hidden');
+        
+        // Activate selected tab
+        switch(tabName) {
+          case 'compressor':
+            elements.compressorTab.classList.add('text-blue-600', 'border-blue-600');
+            elements.compressorContent.classList.remove('hidden');
+            break;
+          case 'legal':
+            elements.legalTab.classList.add('text-blue-600', 'border-blue-600');
+            elements.legalContent.classList.remove('hidden');
+            break;
+          case 'credits':
+            elements.creditsTab.classList.add('text-blue-600', 'border-blue-600');
+            elements.creditsContent.classList.remove('hidden');
+            break;
+        }
       }
 
       function preventDefaults(e) {
@@ -362,11 +385,6 @@
         if (file.size > 10 * 1024 * 1024) { // 10MB limit
           showAlert('Image size should be less than 10MB', 'error');
           return;
-        }
-
-        // Show copyright reminder for first upload
-        if (!state.originalFile) {
-          showAlert('Please ensure you have rights to modify this image before proceeding', 'info');
         }
 
         state.originalFile = file;
@@ -568,7 +586,7 @@
 
     window.addEventListener("load", sendHeight);
     window.addEventListener("resize", sendHeight);
-    setInterval(sendHeight, 500); // height update every 0.5 sec
+    setInterval(sendHeight, 500); // height update har 0.5 sec me
   </script>
 </body>
 </html>
