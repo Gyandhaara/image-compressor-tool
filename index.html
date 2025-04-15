@@ -67,20 +67,82 @@ Implementation Notes:
   <title>Image Compressor</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom styles for scrollable tabs */
+    .tabs-container {
+      position: relative;
+    }
+    .tabs-scroll {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+      margin-bottom: -1px;
+    }
+    .tabs-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .tab-button {
+      flex: 0 0 auto;
+      padding: 0.5rem 1rem;
+      margin-right: 0.25rem;
+      font-weight: 500;
+      color: #6b7280;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-button:hover {
+      color: #3b82f6;
+    }
+    .tab-button.active {
+      color: #3b82f6;
+      border-bottom-color: #3b82f6;
+    }
+    
+    /* Mobile-specific styles */
+    @media (max-width: 768px) {
+      .mobile-container {
+        max-width: 100% !important;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .mobile-content {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 0;
+        margin-left: 0;
+        margin-right: 0;
+      }
+      .mobile-padding {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+  </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
-  <div class="max-w-4xl mx-auto p-4 md:p-6">
-    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-      <div class="p-6">
+  <div class="mobile-container max-w-4xl mx-auto p-0 md:p-6">
+    <div class="mobile-content bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="mobile-padding p-6">
         <h1 class="text-2xl md:text-3xl font-semibold text-center mb-6 text-blue-600">
           <i class="fas fa-compress-alt mr-2"></i>Image Compressor
         </h1>
 
-        <!-- Tabs Navigation -->
-        <div class="flex border-b mb-6">
-          <button id="compressorTab" class="px-4 py-2 font-medium text-blue-600 border-b-2 border-blue-600">Compressor</button>
-          <button id="legalTab" class="px-4 py-2 font-medium text-gray-500 hover:text-blue-600">Legal Information</button>
-          <button id="creditsTab" class="px-4 py-2 font-medium text-gray-500 hover:text-blue-600">Credits</button>
+        <!-- Tabs Navigation with Scroll -->
+        <div class="tabs-container mb-6">
+          <div class="tabs-scroll" id="tabsScroll">
+            <button id="compressorTab" class="tab-button active">
+              <i class="fas fa-compress-alt mr-2"></i>Compressor
+            </button>
+            <button id="legalTab" class="tab-button">
+              <i class="fas fa-gavel mr-2"></i>Legal Information
+            </button>
+            <button id="creditsTab" class="tab-button">
+              <i class="fas fa-users mr-2"></i>Credits
+            </button>
+          </div>
         </div>
 
         <!-- Compressor Tab Content -->
@@ -206,7 +268,7 @@ Implementation Notes:
         </div>
       </div>
 
-      <!-- Results Section - Maintained side-by-side on desktop -->
+      <!-- Results Section -->
       <div id="resultsSection" class="hidden bg-gray-50 border-t p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Original Image -->
@@ -270,7 +332,7 @@ Implementation Notes:
       </div>
     </div>
 
-    <!-- Updated Footer with Links -->
+    <!-- Footer -->
     <div class="text-center text-xs text-gray-500 mt-4 space-y-1">
       <div>© 2025 Professional Image Compressor | GyanDhaara.in | All rights reserved</div>
       <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-2">
@@ -332,13 +394,13 @@ Implementation Notes:
         statsQuality: document.getElementById('statsQuality'),
         loadingModal: document.getElementById('loadingModal'),
         loadingProgress: document.getElementById('loadingProgress'),
-        // Tab elements
         compressorTab: document.getElementById('compressorTab'),
         legalTab: document.getElementById('legalTab'),
         creditsTab: document.getElementById('creditsTab'),
         compressorContent: document.getElementById('compressorContent'),
         legalContent: document.getElementById('legalContent'),
-        creditsContent: document.getElementById('creditsContent')
+        creditsContent: document.getElementById('creditsContent'),
+        tabsScroll: document.getElementById('tabsScroll')
       };
 
       // State
@@ -386,28 +448,24 @@ Implementation Notes:
 
       function switchTab(tabName) {
         // Reset all tabs
-        elements.compressorTab.classList.remove('text-blue-600', 'border-blue-600');
-        elements.legalTab.classList.remove('text-blue-600', 'border-blue-600');
-        elements.creditsTab.classList.remove('text-blue-600', 'border-blue-600');
+        document.querySelectorAll('.tab-button').forEach(tab => {
+          tab.classList.remove('active', 'text-blue-600', 'border-blue-600');
+        });
         elements.compressorContent.classList.add('hidden');
         elements.legalContent.classList.add('hidden');
         elements.creditsContent.classList.add('hidden');
         
         // Activate selected tab
-        switch(tabName) {
-          case 'compressor':
-            elements.compressorTab.classList.add('text-blue-600', 'border-blue-600');
-            elements.compressorContent.classList.remove('hidden');
-            break;
-          case 'legal':
-            elements.legalTab.classList.add('text-blue-600', 'border-blue-600');
-            elements.legalContent.classList.remove('hidden');
-            break;
-          case 'credits':
-            elements.creditsTab.classList.add('text-blue-600', 'border-blue-600');
-            elements.creditsContent.classList.remove('hidden');
-            break;
-        }
+        const activeTab = document.getElementById(`${tabName}Tab`);
+        activeTab.classList.add('active', 'text-blue-600', 'border-blue-600');
+        document.getElementById(`${tabName}Content`).classList.remove('hidden');
+        
+        // Scroll tab into view if needed
+        activeTab.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
       }
 
       function preventDefaults(e) {
@@ -443,7 +501,7 @@ Implementation Notes:
           return;
         }
 
-        if (file.size > 10 * 1024 * 1024) { // 10MB limit
+        if (file.size > 10 * 1024 * 1024) {
           showAlert('Image size should be less than 10MB', 'error');
           return;
         }
@@ -481,7 +539,6 @@ Implementation Notes:
       function estimateCompression() {
         if (!state.originalFile) return;
         
-        // Very basic estimation (could be improved with more accurate algorithms)
         const quality = elements.qualitySlider.value / 100;
         const originalSize = state.originalFile.size;
         let estimatedSize;
@@ -507,21 +564,15 @@ Implementation Notes:
         const img = new Image();
         
         img.onload = () => {
-          // Update progress
           elements.loadingProgress.textContent = '25%';
-          
-          // Calculate new dimensions (optional: could add resizing logic here)
           canvas.width = img.width;
           canvas.height = img.height;
-          
           elements.loadingProgress.textContent = '50%';
           
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0);
-          
           elements.loadingProgress.textContent = '75%';
           
-          // Compress with progressive loading for better UX
           let progress = 75;
           const progressInterval = setInterval(() => {
             progress += 1;
@@ -537,23 +588,19 @@ Implementation Notes:
               state.compressedBlob = blob;
               state.compressedUrl = URL.createObjectURL(blob);
               
-              // Display compressed image
               elements.compressedImg.src = state.compressedUrl;
               
-              // Get compressed image dimensions
               const compressedImg = new Image();
               compressedImg.onload = () => {
                 elements.compressedDimensions.textContent = `${compressedImg.width} × ${compressedImg.height} px`;
                 elements.compressedSize.textContent = formatFileSize(blob.size);
                 
-                // Update stats
                 updateStats(state.originalFile.size, blob.size);
-                
                 showLoading(false);
               };
               compressedImg.src = state.compressedUrl;
             },
-            'image/jpeg', // Could detect original type and use that
+            'image/jpeg',
             quality
           );
         };
@@ -591,14 +638,12 @@ Implementation Notes:
       }
 
       function resetTool() {
-        // Reset state
         state = {
           originalFile: null,
           compressedBlob: null,
           compressedUrl: null
         };
         
-        // Reset UI
         elements.fileInput.value = '';
         elements.originalImg.src = '';
         elements.compressedImg.src = '';
@@ -634,7 +679,6 @@ Implementation Notes:
       }
 
       function showAlert(message, type) {
-        // In a real implementation, you might use a toast library or custom alert
         alert(`${type.toUpperCase()}: ${message}`);
       }
     });
@@ -647,7 +691,7 @@ Implementation Notes:
 
     window.addEventListener("load", sendHeight);
     window.addEventListener("resize", sendHeight);
-    setInterval(sendHeight, 500); // height update har 0.5 sec me
+    setInterval(sendHeight, 500);
   </script>
 </body>
 </html>
